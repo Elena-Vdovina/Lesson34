@@ -24,7 +24,12 @@ public class Homework2 {
 // Файл results.txt
 // Ваша программа для каждого запроса должна будет выводить Файл: Операция: OK, если над файлом
 // выполняется допустимая операция, или же Файл: Операция: Access denied, если операция недопустима.
-    BufferedReader frFiles =new BufferedReader(new FileReader("res/files.txt"));
+    Map<String, String> filesOperator = filesBild();
+    cheakOperation(filesOperator);
+  }
+
+  public static Map<String, String> filesBild() throws IOException {
+    BufferedReader frFiles = new BufferedReader(new FileReader("res/files.txt"));
     int n = Integer.parseInt(frFiles.readLine());
     Map<String, String> filesOperator = new HashMap<>();
     for (int i = 0; i < n; ++i) {
@@ -35,8 +40,12 @@ public class Homework2 {
       filesOperator.put(files, operat);
     }
     frFiles.close();
-    BufferedReader frOperat=new BufferedReader(new FileReader("res/operations.txt"));
-    FileWriter fw=new FileWriter("res/results.txt");
+    return filesOperator;
+  }
+
+  public static void cheakOperation(Map<String, String> filesOperator) throws IOException {
+    BufferedReader frOperat = new BufferedReader(new FileReader("res/operations.txt"));
+    FileWriter fw = new FileWriter("res/results.txt");
     int m = Integer.parseInt(frOperat.readLine());
     for (int i = 0; i < m; ++i) {
       String line = frOperat.readLine();
@@ -56,3 +65,4 @@ public class Homework2 {
     frOperat.close();
   }
 }
+
