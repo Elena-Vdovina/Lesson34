@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
@@ -20,29 +21,27 @@ public class Homework1 {
 //  необходимо вывести на экран его определение.
 // Если слова в словаре нет, программа должна вывести "Не найдено", без кавычек.
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    int n = Integer.parseInt(br.readLine());
+    BufferedReader fr = new BufferedReader(new FileReader("res/dict.txt"));
+    int n = Integer.parseInt(fr.readLine());
     Map<String, String> dictionary = new HashMap<>(n);
-    for (int i = 0; i < n; ++i) {
-      String line = br.readLine();
-      int dot=line.indexOf(':');
-      String word = line.toLowerCase().substring(0,dot);
-      String definition = line.substring(dot+2);
+    for (String line = fr.readLine(); line != null; line = fr.readLine()) {
+      int dot = line.indexOf(':');
+      String word = line.toLowerCase().substring(0, dot);
+      String definition = line.substring(dot + 2);
       dictionary.put(word, definition);
     }
+    fr.close();
 
     int m = Integer.parseInt(br.readLine());
     for (int i = 0; i < m; ++i) {
       String line = br.readLine();
       String word = line.toLowerCase();
-      if(dictionary.containsKey(word)){
+      if (dictionary.containsKey(word)) {
         String definition = dictionary.get(word);
         System.out.println(line + ": " + definition);
-      } else{
+      } else {
         System.out.println("Не найдено");
       }
-
     }
   }
-
-
 }
