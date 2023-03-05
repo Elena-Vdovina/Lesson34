@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,30 +24,35 @@ public class Homework2 {
 // Файл results.txt
 // Ваша программа для каждого запроса должна будет выводить Файл: Операция: OK, если над файлом
 // выполняется допустимая операция, или же Файл: Операция: Access denied, если операция недопустима.
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    int n = Integer.parseInt(br.readLine());
+    BufferedReader frFiles =new BufferedReader(new FileReader("res/files.txt"));
+    int n = Integer.parseInt(frFiles.readLine());
     Map<String, String> filesOperator = new HashMap<>();
     for (int i = 0; i < n; ++i) {
-      String line = br.readLine();
+      String line = frFiles.readLine();
       int dot = line.indexOf(' ');
       String files = line.toLowerCase().substring(0, dot);
       String operat = line.toLowerCase().substring(dot + 1);
       filesOperator.put(files, operat);
     }
-    int m = Integer.parseInt(br.readLine());
+    frFiles.close();
+    BufferedReader frOperat=new BufferedReader(new FileReader("res/operations.txt"));
+    FileWriter fw=new FileWriter("res/results.txt");
+    int m = Integer.parseInt(frOperat.readLine());
     for (int i = 0; i < m; ++i) {
-      String line = br.readLine();
+      String line = frOperat.readLine();
       int dot = line.indexOf(' ');
       String file = line.toLowerCase().substring(dot + 1);
       String operation = line.toLowerCase().substring(0, dot);
       String operN = operation.substring(0, 1);
       if (filesOperator.containsKey(file)) {
         if (filesOperator.get(file).contains(operN)) {
-          System.out.println(file + ": " + operation + ": OK");
+          fw.write(file + ": " + operation + ": OK\n");
         } else {
-          System.out.println(file + ": " + operation + ": Access denied");
+          fw.write(file + ": " + operation + ": Access denied\n");
         }
       }
     }
+    fw.close();
+    frOperat.close();
   }
 }
